@@ -1,0 +1,104 @@
+@font-face {
+    font-family: 'big_johnregular';
+    src: url('big_john-webfont.eot');
+    src: url('big_john-webfont.eot?#iefix') format('embedded-opentype'),
+         url('big_john-webfont.woff2') format('woff2'),
+         url('big_john-webfont.woff') format('woff'),
+         url('big_john-webfont.ttf') format('truetype'),
+         url('big_john-webfont.svg#big_johnregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+body { 
+			padding-top: 70px;
+			background-color: #FFE7C5;
+		}
+
+a {
+    color: #D34A26;
+    font-family: 'big_johnregular';    
+}
+
+a:hover {
+ color: #87260C;
+ text-decoration: none;
+}
+
+h1 {
+	font-family: 'big_johnregular';
+	color: #73190C;
+}
+
+strong {
+color: #D34A26;
+}
+
+hr {
+	border: 3px solid #D34A26;
+}
+
+.navbar {
+	background-color: #FFE7C5;
+}
+
+.logo {
+	padding-top:  25px;
+	font-size: 36px;
+	line-height: 20px;
+}
+
+.genre {
+	font-family: 'big_johnregular';
+	font-size: 150px;
+	color: #D34A26;
+	line-height: 82.5%;
+	margin: -40px 0px 20px;
+}
+
+.descr {
+	font-family: 'klinic slab';
+	font-size: 28px;
+	color: #73190C;
+}
+
+.orangeBar {
+	background-color: #D34A26;
+	height: 35px;
+	width: 100%;
+	margin: -2px;
+}
+
+.blueBar {
+	background-color: #26D3AE;
+	height: 35px;
+	width: 100%;
+	margin: -2px;
+}
+
+#barHalf{
+	width: 50%;
+	display: inline;
+	margin-top: 2px;
+	margin-right: 2px;
+	margin-bottom: 0px
+}
+
+#barLess{
+	width: 30%;
+	display: inline;
+	margin-top: -3px;
+	margin-right: 2px;
+}
+
+#barEvenLess{
+	width: 10%;
+	display: inline;
+	margin-top: -8px;
+	margin-right: 2px;
+}
+.col-centered{
+    float: none;
+    margin: 0 auto;
+}
