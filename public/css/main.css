@@ -39,6 +39,25 @@ hr {
 	border: 3px solid #D34A26;
 }
 
+#genre-text {
+    border: none;
+    font-family: 'big_johnregular';
+    outline: none;
+    resize: none;
+    height: 40px;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    font-size: 35px;
+    background-color: #FFE7C5;
+    color: #D34A26;
+    width: 100%;
+}
+
+.form-group {
+	margin-bottom: 0px;
+}
+
 .navbar {
 	background-color: #FFE7C5;
 }
@@ -98,6 +117,20 @@ hr {
 	margin-top: -8px;
 	margin-right: 2px;
 }
+
+.wtf{
+	display: inline-block;
+	width: 400px;
+	line-height: 1;
+}
+
+.genreTextQ {
+	display: inline-block;
+	width: 400px;
+	line-height: 1;
+	padding: 2px 0px;
+}
+
 .col-centered{
     float: none;
     margin: 0 auto;
