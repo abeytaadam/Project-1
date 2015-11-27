@@ -11,13 +11,28 @@
 		<title>Welcome</title>
 	</head>
 	<body>
-		<div class=" col-md-12 col-centered">
-			<h1 class="wtf">What the fuck is</h1>
-			<form class="genreTextQ" id="search">
-					<textarea name="genre-name" form="search" id="genre-text" rows="1" autofocus></textarea>
+	{{> header}}
+	<div class="orangeBar pull-left" id="barHalf"></div><br><br>
+		<div class="blueBar pull-left" id="barLess"></div><br><br>
+		<div class="orangeBar pull-left" id="barEvenLess"></div>
+	<div class="container">
+		<div class=" col-md-9 col-centered">
+			<div class="wtf">What the fuck is</div>
+			<form class="col-md-2 col-md-offset-3 genreTextQ" id="search">
+					<input type="text" id="genre-text" autofocus><br>
 			</form>
-			<h1 class="wtf">?</h1>
+			<div class="col-md-1 wtf">?</div>
+			<div id="append">
+				<script id="result-template" type='text/x-handlebars-template'>
+					{{#each genres}}
+						{{name}}, {{description}}
+					{{/each}}
+				</script>
 			</div>
+		</div>
+		</div>
+
+		<div id="footer">{{>footer}}</div>
 		<!-- jQuery -->
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.min.js"></script>
 		<!-- Handlebars -->

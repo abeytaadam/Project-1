@@ -17,8 +17,14 @@ app.use(express.static(__dirname + '/public'));
 app.set('view engine', 'hbs');
 hbs.registerPartials(__dirname + '/views/partials');
 
+// Render index page
 app.get('/', function (req, res) {
 	res.render('index');
+});
+
+// Render search results page
+app.get('/results', function (req, res) {
+	res.render('results');
 });
 
 // Server listening
