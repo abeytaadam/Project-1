@@ -2,6 +2,7 @@ var mongoose = require('mongoose'),
 		Schema = mongoose.Schema,
 		GenreSchema = new Schema({
 			description: String,
-			name: String,
+			genreName: String,
+			artistNames: [String],
 			urls: Object
 		});

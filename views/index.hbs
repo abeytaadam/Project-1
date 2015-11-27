@@ -11,27 +11,55 @@
 		<title>Welcome</title>
 	</head>
 	<body>
-	{{> header}}
-	<div class="orangeBar pull-left" id="barHalf"></div><br><br>
+		{{> header}}
+		<div class="orangeBar pull-left" id="barHalf"></div><br><br>
 		<div class="blueBar pull-left" id="barLess"></div><br><br>
 		<div class="orangeBar pull-left" id="barEvenLess"></div>
-	<div class="container">
-		<div class=" col-md-9 col-centered">
-			<div class="wtf">What the fuck is</div>
-			<form class="col-md-2 col-md-offset-3 genreTextQ" id="search">
+		<div class="container">
+			<div class="col-md-9 col-centered" id="hide">
+				<div class="wtf">What the fuck is</div>
+				<form class="col-md-2 col-md-offset-3 genreTextQ" id="search">
 					<input type="text" id="genre-text" autofocus><br>
-			</form>
-			<div class="col-md-1 wtf">?</div>
-			<div id="append">
-				<script id="result-template" type='text/x-handlebars-template'>
-					{{#each genres}}
-						{{name}}, {{description}}
-					{{/each}}
-				</script>
+				</form>
+				<div class="col-md-1 wtf">?</div>
+			</div>
+			<br><br><br>
+				<div id="genre-description">
+					<script id="result-template" type="text/x-handlebars-template">
+						\{{#each genres}}
+						<div class="row">
+								<div class="col-md-6 genre">\{{name}}</div>
+						</div>
+						<div class="blueBar"></div>
+						<div class="orangeBar"></div>
+						<div class="row">
+								<h1 class="col-md-10">Dazzle your friends with this colorful description of <strong>\{{name}}</strong></h1>
+						</div>
+						<div class="row">
+								<p class="col-md-12 descr">
+										\{{description}}
+								</p>
+						</div>
+						<hr>
+						\{{/each}}
+						<div class="row">
+								<h1 class="col-md-10">Spend some time getting to know these bands</h1>
+						</div>
+							
+						<div class="row">
+						<ul>
+							\{{#each artists}}
+								<li>\{{name}}</li>
+							\{{/each}}
+						</ul>
+						</div>
+						<hr>
+						
+					</script>
+					
+				</div>
 			</div>
 		</div>
-		</div>
-
 		<div id="footer">{{>footer}}</div>
 		<!-- jQuery -->
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.min.js"></script>

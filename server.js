@@ -22,6 +22,8 @@ app.get('/', function (req, res) {
 	res.render('index');
 });
 
+
+
 // Render search results page
 app.get('/results', function (req, res) {
 	res.render('results');
