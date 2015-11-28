@@ -10,8 +10,8 @@ $(document).ready(function () {
 	var source = $('#result-template').html(),
 			template = Handlebars.compile(source);
 
-
-
+	// Store all get request info
+	var genreInfo = {};
 
 
 	$search.on('keypress', function (event) {
@@ -24,7 +24,11 @@ $(document).ready(function () {
 					artistUrl = 'http://developer.echonest.com/api/v4/genre/artists?api_key=6SUIA2YM7GPJQQWZF&format=json&results=10&bucket=hotttnesss&name=';
 
 			$.get(genreUrl + genreName.toLowerCase() + genreBucket, function (data) {
-				var genreData = data.response.genres;
+				var genreData = data.response.genres[0];
+				genreInfo.genreName = genreData.name;
+				genreInfo.description = genreData.description;
+				genreInfo.urls = genreData.urls;
+				console.log('GENREINFO', genreInfo);
 				var html = template({
 							genres: genreData
 						});
@@ -34,6 +38,11 @@ $(document).ready(function () {
 			
 			$.get(artistUrl + genreName.toLowerCase(), function (data) {
 				var artistData = data.response.artists;
+				var artistNames = [];
+				for (var i = 0; i < artistData.length; i++){
+					artistNames[i] = artistData[i].name;
+				}
+				genreInfo.artistNames = artistNames;
 				var html = template({
 							artists: artistData
 						});

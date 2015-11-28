@@ -6,3 +6,7 @@ var mongoose = require('mongoose'),
 			artistNames: [String],
 			urls: Object
 		});
+
+var Genre = mongoose.model('Genre', GenreSchema);
+
+module.exports = Genre;

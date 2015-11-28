@@ -35,6 +35,11 @@ strong {
 color: #D34A26;
 }
 
+li {
+	font-family: 'big_johnregular';
+	color: #D34A26;
+}
+
 hr {
 	border: 3px solid #D34A26;
 }
@@ -76,7 +81,7 @@ hr {
 	font-size: 150px;
 	color: #D34A26;
 	line-height: 82.5%;
-	margin: -40px 0px 20px;
+	margin: -40px 12px 20px 12px;
 }
 
 .descr {
@@ -99,6 +104,13 @@ hr {
 	margin: -2px;
 }
 
+.blueBarBottom {
+  background-color: #26D3AE;
+  height: 35px;
+  width: 100%;
+  margin: -3px -2px;
+}
+
 #barHalf {
 	width: 50%;
 	display: inline;
@@ -115,6 +127,28 @@ hr {
 }
 
 #barEvenLess {
+	width: 10%;
+	display: inline;
+	margin-top: -8px;
+	margin-right: 2px;
+}
+
+#barHalfBottom {
+	width: 50%;
+	display: inline;
+	margin-top: 2px;
+	margin-right: 2px;
+	margin-bottom: 0px
+}
+
+#barLessBottom {
+	width: 30%;
+	display: inline;
+	margin-top: -13px;
+	margin-right: 2px;
+}
+
+#barEvenLessBottom {
 	width: 10%;
 	display: inline;
 	margin-top: -8px;

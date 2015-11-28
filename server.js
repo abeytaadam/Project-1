@@ -5,6 +5,9 @@ var express = require('express'),
 		hbs = require('hbs');
 		mongoose.connect('mongodb://localhost/genres');
 
+// Require genre model
+var Genre = require('./models/genre');
+
 var app = express();
 
 //  Set up body-parser
@@ -22,7 +25,10 @@ app.get('/', function (req, res) {
 	res.render('index');
 });
 
-
+// // GET full genre info
+// app.get('/', function (req, res) {
+// 		var newGenre = new Genre(req.body);
+// });
 
 // Render search results page
 app.get('/results', function (req, res) {
