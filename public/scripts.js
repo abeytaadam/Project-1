@@ -10,27 +10,32 @@ $(document).ready(function () {
 	var source = $('#result-template').html(),
 			template = Handlebars.compile(source);
 
-	// Store all get request info
-	var genreInfo = {};
+
 
 
 	$search.on('keypress', function (event) {
 		if (event.which == 13) {
 			event.preventDefault();
 			$hide.hide();
+			var genreInfo = {};
 			var genreName = $genreText.val(),
 					genreUrl = 'http://developer.echonest.com/api/v4/genre/profile?api_key=6SUIA2YM7GPJQQWZF&name=',
 					genreBucket = '&bucket=description&bucket=urls;',
 					artistUrl = 'http://developer.echonest.com/api/v4/genre/artists?api_key=6SUIA2YM7GPJQQWZF&format=json&results=10&bucket=hotttnesss&name=';
 
 			$.get(genreUrl + genreName.toLowerCase() + genreBucket, function (data) {
+				// Temporary append info
+				var genreAppend = data.response.genres;
+				
 				var genreData = data.response.genres[0];
 				genreInfo.genreName = genreData.name;
 				genreInfo.description = genreData.description;
 				genreInfo.urls = genreData.urls;
 				console.log('GENREINFO', genreInfo);
+				
+				// Temporary append info
 				var html = template({
-							genres: genreData
+							genres: genreAppend
 						});
 				$genreDescription.append(html);
 			});
@@ -47,6 +52,10 @@ $(document).ready(function () {
 							artists: artistData
 						});
 				$genreDescription.append(html);
+			});
+
+			$.get('/api/genres/' + genreName, function (data) {
+				console.log('ROUTE RESPONSE', data);
 			});
 		}
 	});

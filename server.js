@@ -3,7 +3,7 @@ var express = require('express'),
 		bodyParser = require('body-parser'),
 		mongoose = require('mongoose'),
 		hbs = require('hbs');
-		mongoose.connect('mongodb://localhost/genres');
+		mongoose.connect('mongodb://localhost/delve-app');
 
 // Require genre model
 var Genre = require('./models/genre');
@@ -25,10 +25,19 @@ app.get('/', function (req, res) {
 	res.render('index');
 });
 
-// // GET full genre info
-// app.get('/', function (req, res) {
-// 		var newGenre = new Genre(req.body);
+// app.get('/api/genres', function (res, req) {
+// 	Genre.find(function (err, allGenres))
 // });
+
+app.get('/api/genres/:name', function (req, res) {
+	var name = req.params.name;
+	console.log(name);
+	Genre.find({genreName:name}, function (err, foundGenre) {
+		console.log('foundGenre', foundGenre);
+
+		res.json(foundGenre);
+	});
+});
 
 // Render search results page
 app.get('/results', function (req, res) {
