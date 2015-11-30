@@ -3,8 +3,8 @@ var express = require('express'),
 		bodyParser = require('body-parser'),
 		request = require('request'),
 		mongoose = require('mongoose'),
-		hbs = require('hbs'),
-		dotenv = require('dotenv').load();
+		hbs = require('hbs');
+		require('dotenv').load();
 		mongoose.connect(
 			process.env.MONGOLAB_URI || 
 			process.env.MONGOHQ_URL || 
@@ -40,7 +40,7 @@ app.get('/api/genres/:name', function (req, res) {
 	var genreInfo = {};
 
 	// Genre.find({genreName:genreName}, function (err, foundGenre) {
-	// 	console.log('foundGenre', foundGenre);
+		console.log('foundGenre', foundGenre);
 	// 		if (foundGenre === []) {
 				
 				request(genreUrl + genreName.toLowerCase() + genreBucket, function (error, res, genreBody) {
