@@ -31,9 +31,6 @@ app.get('/', function (req, res) {
 	res.render('index');
 });
 
-// app.get('/api/genres', function (res, req) {
-// 	Genre.find(function (err, allGenres))
-// });
 
 app.get('/api/genres/:name', function (req, res) {
 	var genreName = req.params.name,
@@ -45,6 +42,7 @@ app.get('/api/genres/:name', function (req, res) {
 	// Genre.find({genreName:genreName}, function (err, foundGenre) {
 	// 	console.log('foundGenre', foundGenre);
 	// 		if (foundGenre === []) {
+				
 				request(genreUrl + genreName.toLowerCase() + genreBucket, function (error, res, genreBody) {
 					var genreData = JSON.parse(genreBody),
 							genreMore = genreData.response.genres[0];
@@ -56,27 +54,26 @@ app.get('/api/genres/:name', function (req, res) {
 						for (var i = 0; i < artistMore.length; i++){
 							artistNames[i] = artistMore[i].name;
 						}
-						
-					genreInfo.name = genreMore.name;
+					
+					// Building object to save to db
+					genreInfo.genreName = genreMore.name;
 					genreInfo.description = genreMore.description;
+					genreInfo.urls = genreMore.urls;
 					genreInfo.artistNames = artistNames;
-					console.log(genreInfo);
+					
+					// Saving built object using genre model
+					newGenre = new Genre(genreInfo);
+					newGenre.save();
 					});
 					
 				});
-				// console.log(genreInfo);
-				// request(artistUrl + genreName.toLowerCase()).pipe(res);
-				// console.log('RESPONSE',res);
 			// }
+
 	// 	console.log(foundGenre);
 	// 	res.json(foundGenre);
 	// });
 });
 
-// Render search results page
-app.get('/results', function (req, res) {
-	res.render('results');
-});
 
 // Server listening
 var server = app.listen(process.env.PORT || 3000, function (){
