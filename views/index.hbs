@@ -26,41 +26,36 @@
 			<br><br><br>
 				<div id="genre-description">
 					<script id="result-template" type="text/x-handlebars-template">
-						\{{#each genres}}
 						<div class="row">
-								<div class="col-md-6 genre">\{{name}}</div>
+								<div class="col-md-6 genre">\{{genre.genreName}}</div>
 						</div>
 						<div class="blueBar"></div>
 						<div class="orangeBar"></div>
 						<div class="row">
-								<h1 class="col-md-10">Dazzle your friends with this colorful description of <strong>\{{name}}</strong></h1>
+								<h1 class="col-md-10">Dazzle your friends with this colorful description of <strong>\{{genre.genreName}}</strong></h1>
 						</div>
 						<div class="row">
 								<p class="col-md-12 descr">
-										\{{description}}
+										\{{genre.description}}
 								</p>
 						</div>
 						<hr>
-						\{{/each}}
-						</script>
-						<script id="result-template" type="text/x-handlebars-template">
 						<div class="row">
 								<h1 class="col-md-10">Spend some time getting to know these bands</h1>
 						</div>
 							
 						<div class="row">
 						<ul>
-							\{{#each artists}}
-								<li>\{{name}}</li>
-							\{{/each}}
+						\{{#each genre.artistNames}}
+								<li>\{{this}}</li>
+						\{{/each}}
 						</ul>
 						</div>
 						<hr>
-						
-					</script>
-					
+						</script>
 				</div>
 			</div>
+			<br><br><br><br>
 		</div>
 		<div class="orangeBar pull-right" id="barEvenLessBottom"></div><br><br>
 		<div class="blueBar pull-right" id="barLessBottom"></div><br>
