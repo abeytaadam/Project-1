@@ -159,7 +159,7 @@ hr {
 .wtf {
 	display: inline-block;
 	line-height: 1;
-	margin-top: 150px;
+	margin-top: 130px;
 	font-family: 'big_johnregular';
 	color: #73190C;
 	font-size: 75px;
@@ -184,6 +184,25 @@ hr {
 .col-centered{
     float: none;
     margin: 0 auto;
+}
+
+
+.error {
+	font-family: 'big_johnregular';
+	font-size: 75px;
+	color: #D34A26;
+	line-height: 82.5%;
+	margin: -80px 12px 70px 12px
+}
+
+/*#hiddenError {
+	display: none;
+}
+*/
+
+#loadGif {
+	margin-top: -30px;
+ padding-left: 300px;
 }
 
 #footer {

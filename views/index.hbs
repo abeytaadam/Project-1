@@ -8,6 +8,7 @@
 		<link type="text/css" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 		<!-- custom styles -->
 		<link rel="stylesheet" type="text/css" href="css/main.css">
+		<link rel="shortcut icon" href="images/favicon.ico"/>
 		<title>Welcome</title>
 	</head>
 	<body>
@@ -41,7 +42,7 @@
 						</div>
 						<hr>
 						<div class="row">
-								<h1 class="col-md-10">Spend some time getting to know these bands</h1>
+								<h1 class="col-md-10">Spend some time getting to know <strong>\{{genre.genreName}}</strong> artists like:</h1>
 						</div>
 							
 						<div class="row">
@@ -53,9 +54,14 @@
 						</div>
 						<hr>
 						</script>
+						<!-- <div class="error" id="hiddenError">
+							<br><br>
+							You must be on another level...<br>
+							No such genre found
+						</div> -->
 				</div>
 			</div>
-			<br><br><br><br>
+			
 		</div>
 		<div class="orangeBar pull-right" id="barEvenLessBottom"></div><br><br>
 		<div class="blueBar pull-right" id="barLessBottom"></div><br>

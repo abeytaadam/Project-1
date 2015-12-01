@@ -35,12 +35,17 @@ app.get('/', function(req, res) {
 	res.render('index');
 });
 
+// Render error page
+app.get('/error', function(req, res) {
+	res.render('error');
+});
+
 
 app.get('/api/genres/:name', function(req, res) {
 	var genreTitle = req.params.name,
 		genreUrl = 'http://developer.echonest.com/api/v4/genre/profile?api_key=' + process.env.api_key + '&name=',
 		genreBucket = '&bucket=description&bucket=urls;',
-		artistUrl = 'http://developer.echonest.com/api/v4/genre/artists?api_key=' + process.env.api_key + '&format=json&results=10&bucket=hotttnesss&name=';
+		artistUrl = 'http://developer.echonest.com/api/v4/genre/artists?api_key=' + process.env.api_key + '&format=json&results=15&bucket=hotttnesss&name=';
 
 	var genreInfo = {};
 
@@ -49,35 +54,38 @@ app.get('/api/genres/:name', function(req, res) {
 	}, function(err, foundGenre) {
 		if (!foundGenre) {
 
-			request(genreUrl + genreTitle.toLowerCase() + genreBucket, function(error, genreRes, genreBody) {
+			request(genreUrl + genreTitle.toLowerCase() + genreBucket, function(genreErr, genreRes, genreBody) {
 				var genreData = JSON.parse(genreBody),
 					genreMore = genreData.response.genres[0];
 
-				request(artistUrl + genreTitle.toLowerCase(), function(error, artistRes, artistBody) {
-					var artistData = JSON.parse(artistBody),
-						artistMore = artistData.response.artists;
-					var artistNames = [];
-					for (var i = 0; i < artistMore.length; i++) {
-						artistNames[i] = artistMore[i].name;
+				request(artistUrl + genreTitle.toLowerCase(), function(artistErr, artistRes, artistBody) {
+					var artistData = JSON.parse(artistBody);
+					console.log('artist body', artistBody);
+					if (artistData.response.status.code === 5) {
+						res.status(400).json({error: 'no such genre'});
+					} else {
+						var artistMore = artistData.response.artists;
+						var artistNames = [];
+						for (var i = 0; i < artistMore.length; i++) {
+							artistNames[i] = artistMore[i].name;
+						}
+
+						// Building object to save to db
+						genreInfo.genreName = genreMore.name;
+						genreInfo.description = genreMore.description;
+						genreInfo.urls = genreMore.urls;
+						genreInfo.artistNames = artistNames;
+
+						// Saving built object using genre model
+						newGenre = new Genre(genreInfo);
+						newGenre.save(function(err, savedGenre) {
+							res.json(savedGenre);
+						});
 					}
-
-					// Building object to save to db
-					genreInfo.genreName = genreMore.name;
-					genreInfo.description = genreMore.description;
-					genreInfo.urls = genreMore.urls;
-					genreInfo.artistNames = artistNames;
-
-					// Saving built object using genre model
-					newGenre = new Genre(genreInfo);
-					newGenre.save(function(err, savedGenre) {
-						console.log(savedGenre);
-						res.json(savedGenre);
-					});
 				});
 
 			});
 		} else {
-			console.log(foundGenre);
 			res.json(foundGenre);
 		}
 	});
