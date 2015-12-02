@@ -77,20 +77,28 @@ app.get('/api/genres/:name', function(req, res) {
 
 				request(wholePlaylistUrl, function(playlistErr, playlistRes, playlistBody) {
 					var playlistData = JSON.parse(playlistBody);
-					var playlistMore = playlistData.response.songs;
-					var playlistItems = [];
-					for (var j = 0; j < playlistMore.length; j++) {
-						playlistItems[j] = playlistMore[j];
-						var tracks = playlistMore[j].tracks[0].foreign_id;
-						playlistItems[j] = tracks.slice(14);
-					}
+					console.log(playlistData.response.status.code);
+					if (playlistData.response.status.code === 5) {
+							res.status(400).json({
+								error: 'no such genre playlist'
+							});
+							return;
+						} else {
+								var playlistMore = playlistData.response.songs;
+								var playlistItems = [];
+								for (var j = 0; j < playlistMore.length; j++) {
+									playlistItems[j] = playlistMore[j];
+									var tracks = playlistMore[j].tracks[0].foreign_id;
+									playlistItems[j] = tracks.slice(14);
+								}
+							}
 
 					request(wholeArtistUrl, function(artistErr, artistRes, artistBody) {
 						var artistData = JSON.parse(artistBody);
 						// console.log('artist body', artistBody);
 						if (artistData.response.status.code === 5) {
 							res.status(400).json({
-								error: 'no such genre'
+								error: 'no such genre artist'
 							});
 						} else {
 							var artistMore = artistData.response.artists;
