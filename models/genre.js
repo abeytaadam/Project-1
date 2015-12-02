@@ -4,6 +4,7 @@ var mongoose = require('mongoose'),
 			description: String,
 			genreName: String,
 			artistNames: [String],
+			playlist: [String],
 			urls: Object
 		});
 

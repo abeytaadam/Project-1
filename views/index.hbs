@@ -53,12 +53,19 @@
 						</ul>
 						</div>
 						<hr>
+						<div class="row">
+								<h1 class="col-md-10">And what do you know? Spotify made you a <strong>\{{genre.genreName}}</strong> playlist</h1>
+						</div>
+						<div class="row">
+							<div class="container">
+								<iframe src="https://embed.spotify.com/?uri=spotify:trackset:PREFEREDTITLE:\{{#each genre.playlist}}
+									\{{this}},
+								\{{/each}}" frameborder="0" allowtransparency="true">
+								</iframe>
+							</div>
+						</div>
+						<hr>
 						</script>
-						<!-- <div class="error" id="hiddenError">
-							<br><br>
-							You must be on another level...<br>
-							No such genre found
-						</div> -->
 				</div>
 			</div>
 			

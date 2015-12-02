@@ -34,9 +34,11 @@ $(document).ready(function() {
 
 				success: function(data) {
 					$genreDescription.empty();
+					console.log('Data', data);
 					var html = template({
 						genre: data
 					});
+					console.log(data);
 					$genreDescription.append(html);
 				},
 
