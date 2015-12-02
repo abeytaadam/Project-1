@@ -40,6 +40,12 @@ app.get('/error', function(req, res) {
 	res.render('error');
 });
 
+// Get API items
+app.get('/api/genres', function (req, res) {
+	Genre.find(function (err, allGenres) {
+		res.json({genres: allGenres});
+	});
+});
 
 app.get('/api/genres/:name', function(req, res) {
 	var genreTitle = req.params.name,

@@ -21,14 +21,14 @@ a {
     font-family: 'big_johnregular';    
 }
 
-h1 {
-	font-family: 'big_johnregular';
-	color: #73190C;
-}
-
 a:hover {
  color: #87260C;
  text-decoration: none;
+}
+
+h1 {
+	font-family: 'big_johnregular';
+	color: #73190C;
 }
 
 strong {
@@ -75,6 +75,21 @@ hr {
 	padding-top:  25px;
 	font-size: 36px;
 	line-height: 20px;
+}
+
+.tryAgain {
+	padding-top: 30px;
+	font-size: 50px;
+	line-height: 20px;
+	display: inline-block;
+	margin-left: -120px;
+}
+
+.glyphicon-arrow-right {
+	padding-top:  25px;
+	font-size: 50px;
+	line-height: 20px;
+	display: inline-block;
 }
 
 .genre {
@@ -190,7 +205,7 @@ hr {
 .error {
 	font-family: 'big_johnregular';
 	font-size: 75px;
-	color: #D34A26;
+	color: #73190C;
 	line-height: 82.5%;
 	margin: -80px 12px 70px 12px
 }
@@ -199,6 +214,19 @@ hr {
 	display: none;
 }
 */
+
+#validate {
+	font-family: 'big_johnregular';
+	font-size: 15px;
+	color: #D34A26;
+}
+
+::-webkit-input-placeholder {
+   font-size: 63px;
+   color: #73190C;
+   display: none;
+   opacity: 0.5;
+}
 
 #loadGif {
 	margin-top: -30px;
