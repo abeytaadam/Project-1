@@ -64,7 +64,7 @@ app.get('/api/genres/:name', function(req, res) {
 		wholeArtistUrl = artistUrl + genreTitle.toLowerCase(),
 		wholePlaylistUrl = playlistUrl + genreTitle.toLowerCase() + playlistEnd;
 
-	var genreInfo = {};
+	
 
 	Genre.findOne({
 		genreName: genreTitle.toLowerCase()
@@ -108,6 +108,7 @@ app.get('/api/genres/:name', function(req, res) {
 							}
 
 							// Building object to save to db
+							var genreInfo = {};
 							genreInfo.genreName = genreMore.name;
 							genreInfo.description = genreMore.description;
 							genreInfo.urls = genreMore.urls;
