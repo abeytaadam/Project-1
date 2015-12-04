@@ -80,11 +80,9 @@ app.get('/api/genres/:name', function(req, res) {
 				var genreData = JSON.parse(genreBody),
 					genreMore = genreData.response.genres[0];
 
-				// console.log('GENRE BODY', genreBody);
 
 				request(wholePlaylistUrl, function(playlistErr, playlistRes, playlistBody) {
 					var playlistData = JSON.parse(playlistBody);
-					// console.log('PLAYLIST DATA : ', playlistData.response.songs);
 					if (playlistData.response.status.code === 5) {
 						res.status(400).json({
 							error: 'no such genre playlist'
@@ -102,7 +100,6 @@ app.get('/api/genres/:name', function(req, res) {
 
 					request(wholeArtistUrl, function(artistErr, artistRes, artistBody) {
 						var artistData = JSON.parse(artistBody);
-						// console.log('ARTIST DATA :', artistData.response);
 						if (artistData.response.status.code === 5) {
 							res.status(400).json({
 								error: 'no such genre artist'
@@ -139,8 +136,6 @@ app.get('/api/genres/:name', function(req, res) {
 								genreInfo.urls = genreMore.urls;
 								genreInfo.artists = artists;
 								genreInfo.playlist = playlistTracks;
-								// console.log('Playlist', playlistItems[0]);
-								// console.log('GenreInfo', genreInfo);
 
 								// Saving built object using genre model
 								newGenre = new Genre(genreInfo);
