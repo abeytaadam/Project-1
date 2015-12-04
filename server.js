@@ -69,7 +69,7 @@ app.get('/api/genres/:name', function(req, res) {
 		wholeArtistUrl = artistUrl + genreTitle.toLowerCase() + artistBucket,
 		wholePlaylistUrl = playlistUrl + genreTitle.toLowerCase() + playlistBucket;
 
-	
+
 
 	Genre.findOne({
 		genreName: genreTitle.toLowerCase()
@@ -80,23 +80,25 @@ app.get('/api/genres/:name', function(req, res) {
 				var genreData = JSON.parse(genreBody),
 					genreMore = genreData.response.genres[0];
 
-					// console.log('GENRE BODY', genreBody);
+				// console.log('GENRE BODY', genreBody);
 
 				request(wholePlaylistUrl, function(playlistErr, playlistRes, playlistBody) {
 					var playlistData = JSON.parse(playlistBody);
 					// console.log('PLAYLIST DATA : ', playlistData.response.songs);
 					if (playlistData.response.status.code === 5) {
-							res.status(400).json({
-								error: 'no such genre playlist'
+						res.status(400).json({
+							error: 'no such genre playlist'
+						});
+						return;
+					} else {
+						var playlistMore = playlistData.response.songs;
+						var playlistTracks = playlistMore.map(function(track) {
+							var tracks = track.tracks[0].foreign_id.slice(14);
+							return new Playlist({
+								track: tracks
 							});
-							return;
-						} else {
-								var playlistMore = playlistData.response.songs;
-								var playlistTracks = playlistMore.map(function (track) {
-									var tracks = track.tracks[0].foreign_id.slice(14);
-									return new Playlist ({track: tracks});
-								});
-							}
+						});
+					}
 
 					request(wholeArtistUrl, function(artistErr, artistRes, artistBody) {
 						var artistData = JSON.parse(artistBody);
@@ -108,23 +110,26 @@ app.get('/api/genres/:name', function(req, res) {
 						} else {
 							var artistIds = [];
 							var artistMore = artistData.response.artists;
-							var artistsStuff = artistMore.map(function (artist) {
-								var	artistId = artist.foreign_ids[0].foreign_id.slice(15);
+							var artistsStuff = artistMore.map(function(artist) {
+								var artistId = artist.foreign_ids[0].foreign_id.slice(15);
 								artistIds.push(artistId);
 							});
 
-							
-							request(spotifyImageUrl + artistIds.join(','), function (spotifyErr, spotifyRes, spotifyBody){
+
+							request(spotifyImageUrl + artistIds.join(','), function(spotifyErr, spotifyRes, spotifyBody) {
 								var spotifyArtistData = JSON.parse(spotifyBody);
 								var spotifyArtistMore = spotifyArtistData.artists;
-								var artists = spotifyArtistMore.map(function (spotArtists) {
+								var artists = spotifyArtistMore.map(function(spotArtists) {
 									var url;
 									if (spotArtists.images[0]) {
 										url = spotArtists.images[0].url;
 									} else {
 										url = 'http://www.thewoodjoynt.com/Content/Images/Products/NoImageAvailable.jpg';
 									}
-									return new Artist ({name: spotArtists.name, imageUrl: url});
+									return new Artist({
+										name: spotArtists.name,
+										imageUrl: url
+									});
 								});
 
 
