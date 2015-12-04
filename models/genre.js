@@ -1,10 +1,13 @@
 var mongoose = require('mongoose'),
 		Schema = mongoose.Schema,
-		GenreSchema = new Schema({
+		Artist = require('./artist'),
+		Playlist = require('./playlist');
+
+var	GenreSchema = new Schema({
 			description: String,
 			genreName: String,
-			artistNames: [String],
-			playlist: [String],
+			artists: [Artist.schema],
+			playlist: [Playlist.schema],
 			urls: Object
 		});
 

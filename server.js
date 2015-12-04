@@ -14,7 +14,9 @@ mongoose.connect(
 
 
 // Require genre model
-var Genre = require('./models/genre');
+var Genre = require('./models/genre'),
+	Artist = require('./models/artist'),
+	Playlist = require('./models/playlist');
 
 var app = express();
 
@@ -55,14 +57,17 @@ app.get('/api/genres/:name', function(req, res) {
 	var genreTitle = req.params.name,
 		genreUrl = 'http://developer.echonest.com/api/v4/genre/profile?api_key=' + process.env.api_key + '&name=',
 		genreBucket = '&bucket=description&bucket=urls;',
-		artistUrl = 'http://developer.echonest.com/api/v4/genre/artists?api_key=' + process.env.api_key + '&format=json&results=15&bucket=hotttnesss&name=',
+		artistUrl = 'http://developer.echonest.com/api/v4/genre/artists?api_key=' + process.env.api_key + '&format=json&results=15&name=',
+		artistBucket = '&bucket=hotttnesss&bucket=familiarity&bucket=id:spotify',
 		playlistUrl = 'http://developer.echonest.com/api/v4/playlist/basic?api_key=' + process.env.api_key + '&genre=',
-		playlistEnd = '&type=genre-radio&results=10&bucket=id:spotify&bucket=tracks&limit=true';
+		playlistBucket = '&type=genre-radio&results=10&bucket=id:spotify&bucket=tracks&limit=true',
+
+		spotifyImageUrl = 'https://api.spotify.com/v1/artists/?ids=';
 
 	// Simplifying urls
 	var wholeGenreUrl = genreUrl + genreTitle.toLowerCase() + genreBucket,
-		wholeArtistUrl = artistUrl + genreTitle.toLowerCase(),
-		wholePlaylistUrl = playlistUrl + genreTitle.toLowerCase() + playlistEnd;
+		wholeArtistUrl = artistUrl + genreTitle.toLowerCase() + artistBucket,
+		wholePlaylistUrl = playlistUrl + genreTitle.toLowerCase() + playlistBucket;
 
 	
 
@@ -75,9 +80,11 @@ app.get('/api/genres/:name', function(req, res) {
 				var genreData = JSON.parse(genreBody),
 					genreMore = genreData.response.genres[0];
 
+					// console.log('GENRE BODY', genreBody);
+
 				request(wholePlaylistUrl, function(playlistErr, playlistRes, playlistBody) {
 					var playlistData = JSON.parse(playlistBody);
-					console.log(playlistData.response.status.code);
+					// console.log('PLAYLIST DATA : ', playlistData.response.songs);
 					if (playlistData.response.status.code === 5) {
 							res.status(400).json({
 								error: 'no such genre playlist'
@@ -85,48 +92,63 @@ app.get('/api/genres/:name', function(req, res) {
 							return;
 						} else {
 								var playlistMore = playlistData.response.songs;
-								var playlistItems = [];
-								for (var j = 0; j < playlistMore.length; j++) {
-									playlistItems[j] = playlistMore[j];
-									var tracks = playlistMore[j].tracks[0].foreign_id;
-									playlistItems[j] = tracks.slice(14);
-								}
+								var playlistTracks = playlistMore.map(function (track) {
+									var tracks = track.tracks[0].foreign_id.slice(14);
+									return new Playlist ({track: tracks});
+								});
 							}
 
 					request(wholeArtistUrl, function(artistErr, artistRes, artistBody) {
 						var artistData = JSON.parse(artistBody);
-						// console.log('artist body', artistBody);
+						// console.log('ARTIST DATA :', artistData.response);
 						if (artistData.response.status.code === 5) {
 							res.status(400).json({
 								error: 'no such genre artist'
 							});
 						} else {
+							var artistIds = [];
 							var artistMore = artistData.response.artists;
-							var artistNames = [];
-							for (var i = 0; i < artistMore.length; i++) {
-								artistNames[i] = artistMore[i].name;
-							}
+							var artistsStuff = artistMore.map(function (artist) {
+								var	artistId = artist.foreign_ids[0].foreign_id.slice(15);
+								artistIds.push(artistId);
+							});
 
-							// Building object to save to db
-							var genreInfo = {};
-							genreInfo.genreName = genreMore.name;
-							genreInfo.description = genreMore.description;
-							genreInfo.urls = genreMore.urls;
-							genreInfo.artistNames = artistNames;
-							genreInfo.playlist = playlistItems;
-							// console.log('Playlist', playlistItems[0]);
-							console.log('GenreInfo', genreInfo);
+							
+							request(spotifyImageUrl + artistIds.join(','), function (spotifyErr, spotifyRes, spotifyBody){
+								var spotifyArtistData = JSON.parse(spotifyBody);
+								var spotifyArtistMore = spotifyArtistData.artists;
+								var artists = spotifyArtistMore.map(function (spotArtists) {
+									var url;
+									if (spotArtists.images[0]) {
+										url = spotArtists.images[0].url;
+									} else {
+										url = 'http://www.thewoodjoynt.com/Content/Images/Products/NoImageAvailable.jpg';
+									}
+									return new Artist ({name: spotArtists.name, imageUrl: url});
+								});
 
-							// Saving built object using genre model
-							newGenre = new Genre(genreInfo);
-							newGenre.save(function(err, savedGenre) {
-								if (err) {
-									console.error(err);
-									return res.status(500).json({
-										error: 'ERROR'
-									});
-								}
-								res.json(savedGenre);
+
+								var genreInfo = {};
+								genreInfo.genreName = genreMore.name;
+								genreInfo.description = genreMore.description;
+								genreInfo.urls = genreMore.urls;
+								genreInfo.artists = artists;
+								genreInfo.playlist = playlistTracks;
+								// console.log('Playlist', playlistItems[0]);
+								// console.log('GenreInfo', genreInfo);
+
+								// Saving built object using genre model
+								newGenre = new Genre(genreInfo);
+								newGenre.save(function(err, savedGenre) {
+									if (err) {
+										console.error(err);
+										return res.status(500).json({
+											error: 'ERROR'
+										});
+									}
+									res.json(savedGenre);
+								});
+
 							});
 						}
 					});

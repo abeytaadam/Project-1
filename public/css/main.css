@@ -72,9 +72,19 @@ hr {
 }
 
 .logo {
+	font-family: 'big_johnregular';
 	padding-top:  25px;
 	font-size: 36px;
 	line-height: 20px;
+}
+
+.logo-right {
+	font-family: 'big_johnregular';
+	padding-top:  25px;
+	font-size: 36px;
+	line-height: 20px;
+	font-size: 22px;
+	color: #73190C;
 }
 
 .tryAgain {
@@ -94,7 +104,7 @@ hr {
 
 .genre {
 	font-family: 'big_johnregular';
-	font-size: 150px;
+	font-size: 110px;
 	color: #D34A26;
 	line-height: 82.5%;
 	margin: -40px 12px 20px 12px;
@@ -182,7 +192,7 @@ hr {
 
 .genreTextQ {
     display: inline-block;
-    width: 450px;
+    width: 470px;
     padding: 0px 0px;
     margin-right: -15px;
     font-family: 'big_johnregular';
@@ -201,6 +211,28 @@ hr {
     margin: 0 auto;
 }
 
+.player {
+  margin-top: -122px;
+  margin-left: 361px;
+}
+
+.square {
+	width: 300px;
+	/*overflow: hidden;*/
+}
+
+.artpic {
+  overflow: hidden;
+  max-height: 40px;
+}
+
+.artname {
+  font-family: 'big_johnregular';
+  color: #73190C;
+  font-size: 17px;
+  width: 300px;
+  background-color: #26D3AE;
+}
 
 .error {
 	font-family: 'big_johnregular';
@@ -210,10 +242,6 @@ hr {
 	margin: -80px 12px 70px 12px
 }
 
-/*#hiddenError {
-	display: none;
-}
-*/
 
 #validate {
 	font-family: 'big_johnregular';
