@@ -56,7 +56,8 @@ app.get('/api/genres/:name', function(req, res) {
 	// Building urls
 	var genreTitle = req.params.name,
 		genreUrl = 'http://developer.echonest.com/api/v4/genre/profile?api_key=' + process.env.api_key + '&name=',
-		genreBucket = '&bucket=description&bucket=urls;',
+		// editing url string for genre score
+		genreBucket = '&bucket=description&bucket=urls&bucket=genre_scores',
 		artistUrl = 'http://developer.echonest.com/api/v4/genre/artists?api_key=' + process.env.api_key + '&format=json&results=15&name=',
 		artistBucket = '&bucket=hotttnesss&bucket=familiarity&bucket=id:spotify',
 		playlistUrl = 'http://developer.echonest.com/api/v4/playlist/basic?api_key=' + process.env.api_key + '&genre=',
@@ -79,6 +80,10 @@ app.get('/api/genres/:name', function(req, res) {
 			request(wholeGenreUrl, function(genreErr, genreRes, genreBody) {
 				var genreData = JSON.parse(genreBody),
 					genreMore = genreData.response.genres[0];
+
+				// adding var for genre familiarity
+				var genreFam = genreData.response.genres[0].scores.familiarity;
+					console.log(genreFam);
 
 
 				request(wholePlaylistUrl, function(playlistErr, playlistRes, playlistBody) {
@@ -136,6 +141,7 @@ app.get('/api/genres/:name', function(req, res) {
 								genreInfo.urls = genreMore.urls;
 								genreInfo.artists = artists;
 								genreInfo.playlist = playlistTracks;
+								genreInfo.familiarity = genreFam; 
 
 								// Saving built object using genre model
 								newGenre = new Genre(genreInfo);
