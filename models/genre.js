@@ -8,6 +8,7 @@ var	GenreSchema = new Schema({
 			genreName: String,
 			artists: [Artist.schema],
 			playlist: [Playlist.schema],
+			familiarity: String,
 			urls: Object
 		});
 
