@@ -34,61 +34,63 @@
 			<div id="genre-description">
 				<script id="result-template" type="text/x-handlebars-template">
 					<div class="row">
-								<div class="col-md-6 genre">\{{genre.genreName}}</div>
+						<div class="col-md-6 genre">\{{genre.genreName}}</div>
+						//added a column for genre familiaryt score - placeholder
+						<div class="col-md-6" id="familiarity">\{{genre.familiarity}}</div>
 					</div>
 					<div class="blueBar"></div>
 					<div class="orangeBar"></div>
 					<br>
 					<div class="row">
-							<div class="col-centered col-md-11">
-									<h1>
-										Spotify made a <strong>\{{genre.genreName}}</strong> playlist for you
-									</h1>
-							</div>
-							<div class="col-md-8 col-centered">
-											<img class="playeropen" src="images/delvePlayerBorder.png">
-									</div>
-							<div class="col-md-10">
-										
-										<div class="col-md-8 player">
-												<iframe src="https://embed.spotify.com/?uri=spotify:trackset:\{{genre.genreName}}:\{{#each genre.playlist}}
-													\{{track}},
-												\{{/each}}&view=list&theme=white" width="350" height="100" frameborder="0" allowtransparency="true">
-												</iframe>
-												<br>
-										</div>
+								<div class="col-centered col-md-11">
+											<h1>
+												Spotify made a <strong>\{{genre.genreName}}</strong> playlist for you
+											</h1>
 								</div>
+								<div class="col-md-8 col-centered">
+													<img class="playeropen" src="images/delvePlayerBorder.png">
+										</div>
+								<div class="col-md-10">
+												
+												<div class="col-md-8 player">
+															<iframe src="https://embed.spotify.com/?uri=spotify:trackset:\{{genre.genreName}}:\{{#each genre.playlist}}
+																\{{track}},
+															\{{/each}}&view=list&theme=white" width="350" height="100" frameborder="0" allowtransparency="true">
+															</iframe>
+															<br>
+												</div>
+									</div>
 					</div>
 					<hr>
 					<div class="row">
-								<h1 class="col-md-10">Dazzle your friends with this colorful description of <strong>\{{genre.genreName}}</strong></h1>
+									<h1 class="col-md-10">Dazzle your friends with this colorful description of <strong>\{{genre.genreName}}</strong></h1>
 					</div>
 					<div class="row">
-								<p class="col-md-12 descr">
-											\{{genre.description}}
-								</p>
+									<p class="col-md-12 descr">
+													\{{genre.description}}
+									</p>
 					</div>
 					<hr>
 					<div class="row">
-							<div class="col-md-12">
-									<h1>
-										Spend some time getting to know these <strong>\{{genre.genreName}}</strong> artists
-									</h1>
-							</div>
-							<div class='container'>
-									\{{#grouped_each 3 genre.artists}}
-										<div class="row">
-												\{{#each this}}
-													<div class="col-md-4">
-															<div class="artpic"><img class="square" src="\{{imageUrl}}"></div>
-															<div class="artname">\{{name}}</div>
-													</div>
-												\{{/each}}
-										</div><br>
-									\{{/grouped_each}}
-							</div>
+								<div class="col-md-12">
+											<h1>
+												Spend some time getting to know these <strong>\{{genre.genreName}}</strong> artists
+											</h1>
+								</div>
+								<div class='container'>
+											\{{#grouped_each 3 genre.artists}}
+												<div class="row">
+															\{{#each this}}
+																<div class="col-md-4">
+																			<div class="artpic"><img class="square" src="\{{imageUrl}}"></div>
+																			<div class="artname">\{{name}}</div>
+																</div>
+															\{{/each}}
+												</div><br>
+											\{{/grouped_each}}
+								</div>
 						</div>
-				</div>
+			</div>
 			</script>
 		</div>
 	</div>
